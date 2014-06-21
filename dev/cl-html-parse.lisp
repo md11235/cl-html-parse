@@ -1274,14 +1274,16 @@
 			 (let ((callback (tag-callback (tag-name (if* (atom val)
 								    then val
 								    else (first val))))))
-			   (when callback
-			     (funcall callback (if* (atom val)
-						  then val
-						  else (list val)))))
-			 (push (if* (atom val)
-				  then val
-				  else (list val))
-			       guts)
+			   (if callback
+                   (push (funcall callback (if* (atom val)
+                                                then val
+                                                else (list val)))
+                         guts)
+                   (push (if* (atom val)
+                              then val
+                              else (list val))
+                         guts))
+               )			 
 		    else (save-state)
 			 (setq current-tag val)
 			 (setq guts nil))
